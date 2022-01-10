@@ -11,30 +11,7 @@ const config = require('./config/config');
 const { connect } = require('http2');
 const port = config.node_port || 5000 ;
 
-app.get("/",async (req,res)=>{
-    try{
-        res.json({
-            status:200,
-            message:"Successfully"
-        })
-    }
-    catch(err){
-        console.log(err)
-        return res.status(500).send("server error")
-    }
-})
-
-require('dotenv').config()
-app.use(bodyParser.json());
-app.use(cors());
-server.listen(port,()=>{
-    console.log("server is Running" + port);
-    console.log('*****++++++++++++*****')
-mongoose.connect(`${config.db_name}`,{useNewUrlParser: true,useUnifiedTopology:true})
-.then(()=>{
-    console.log('DataBase connected sucessfull')
-    // let router =require('./router/authRoute')
-// const config =require("./config/config");
+  // const config =require("./config/config");
 const userController = require('./controller/user_controller')
 const shopController = require('./controller/shop_controller');
 const stationController = require('./controller/station_controller');
@@ -49,6 +26,9 @@ var storage = multer.diskStorage({destination: (req, file, cb) => {cb(null, './u
     }
 });
 const uploads = multer({storage:storage});
+require('dotenv').config()
+app.use(bodyParser.json());
+app.use(cors());
 app.post("/api/userlogin",userController.Create_user)
 app.get("/api/userlogin",userController.Find_user)
 app.post('/api/shop',uploads.fields([{name: 'ShopImage', maxCount: 1
@@ -68,6 +48,15 @@ app.post("/api/Charging",chargeController.create_Charge)
 app.get("/api/Charging",chargeController.find_Charge)
 app.put("/api/Charging",chargeController.update_Charge)
 app.delete("/api/Charging",chargeController.find_Charge)
+
+server.listen(port,()=>{
+    console.log("server is Running" + port);
+    console.log('*****++++++++++++*****')
+mongoose.connect(`${config.db_name}`,{useNewUrlParser: true,useUnifiedTopology:true})
+.then(()=>{
+    console.log('DataBase connected sucessfull')
+    // let router =require('./router/authRoute')
+  
 },err=>{
     console.log('DataBase connection Failed');
 })
