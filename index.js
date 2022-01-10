@@ -10,6 +10,20 @@ const server = http.createServer(app)
 const config = require('./config/config');
 const { connect } = require('http2');
 const port = config.node_port || 5000 ;
+
+app.get("/",async (req,res)=>{
+    try{
+        res.json({
+            status:200,
+            message:"Successfully"
+        })
+    }
+    catch(err){
+        console.log(err)
+        return res.status(500).send("server error")
+    }
+})
+
 require('dotenv').config()
 app.use(bodyParser.json());
 app.use(cors());
