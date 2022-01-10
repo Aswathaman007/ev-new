@@ -29,6 +29,19 @@ const uploads = multer({storage:storage});
 require('dotenv').config()
 app.use(bodyParser.json());
 app.use(cors());
+app.get("/",async (req,res)=>{
+    try{
+        res.json({
+            status:200,
+            message:"Successfully"
+        })
+    }
+    catch(err){
+        console.log(err)
+        return res.status(500).send("server error")
+    }
+})
+
 app.post("/api/userlogin",userController.Create_user)
 app.get("/api/userlogin",userController.Find_user)
 app.post('/api/shop',uploads.fields([{name: 'ShopImage', maxCount: 1
