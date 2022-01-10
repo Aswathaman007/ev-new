@@ -14,7 +14,7 @@ var storage = multer.diskStorage({destination: (req, file, cb) => {cb(null, './u
 });
 const uploads = multer({storage:storage});
 
-module.exports = function(app){
+ return module.exports = function(app){
     console.log("app")
 //userLogin
 app.post("/api/userlogin",userController.Create_user)
